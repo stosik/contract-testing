@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/persons")
+@RequestMapping("/customers")
 internal class CustomerController {
 
     @GetMapping
-    fun getPersons(): List<CustomerResponse> {
-        return customers.values.toList()
+    fun getAllCustomers(): List<CustomerResponse> {
+        return CUSTOMERS.values.toList()
     }
 
     @GetMapping("/{id}")
-    fun getPerson(@PathVariable id: String): ResponseEntity<CustomerResponse> {
-        return customers[id]
+    fun getCustomer(@PathVariable id: String): ResponseEntity<CustomerResponse> {
+        return CUSTOMERS[id]
             ?.let { ResponseEntity.ok().body(it) }
             ?: ResponseEntity.notFound().build()
     }
@@ -25,7 +25,7 @@ internal class CustomerController {
 
 data class CustomerResponse(val id: String, val name: String, val surname: String)
 
-private val customers = mapOf(
+private val CUSTOMERS = mapOf(
     "1" to CustomerResponse("1", "Chris", "Froome"),
     "2" to CustomerResponse("2", "Tadej", "Pogacar"),
     "3" to CustomerResponse("3", "Jonas", "Vingegaard")
